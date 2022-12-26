@@ -3,7 +3,8 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const contactsRouter = require("./routes/api/contacts");
-const weatherRouter = require('./routes/api/weather');
+const {errorHandler} = require('./helper/apiHelpers')
+// const weatherRouter = require("./routes/api/weather");
 
 const app = express();
 
@@ -13,15 +14,9 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/contacts", contactsRouter);
-app.use("/api/weather", weatherRouter);
+app.use("/api/posts", contactsRouter);
+// app.use("/api/weather", weatherRouter );
 
-app.use((req, res) => {
-  res.status(404).json({ message: "Not found" });
-});
-
-app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
-});
+app.use(errorHandler);
 
 module.exports = app;
