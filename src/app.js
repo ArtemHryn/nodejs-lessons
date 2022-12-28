@@ -2,7 +2,8 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-const contactsRouter = require("./routes/api/contacts");
+const postsRouter = require("./routes/api/postsRouter");
+const authRouter = require("./routes/api/authRouter");
 const {errorHandler} = require('./helper/apiHelpers')
 // const weatherRouter = require("./routes/api/weather");
 
@@ -14,7 +15,8 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/posts", contactsRouter);
+app.use("/api/posts", postsRouter);
+app.use("/api/auth", authRouter);
 // app.use("/api/weather", weatherRouter );
 
 app.use(errorHandler);

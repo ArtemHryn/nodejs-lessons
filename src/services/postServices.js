@@ -1,4 +1,4 @@
-const { Post } = require("../db/postModel");
+const { Post } = require("../models/postModel");
 const { NotFound } = require("../helper/errors");
 
 const getPosts = async () => {
