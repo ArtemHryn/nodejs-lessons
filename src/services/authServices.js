@@ -23,7 +23,8 @@ const login = async ({ email, password }) => {
       _id: user._id,
       createdAt: user.createdAt,
     },
-    process.env.JWT_SERCRET
+    process.env.JWT_SERCRET,
+    { expiresIn: "1d" }
   );
 
   return token;

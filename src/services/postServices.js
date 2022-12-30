@@ -1,27 +1,31 @@
 const { Post } = require("../models/postModel");
 const { NotFound } = require("../helper/errors");
 
-const getPosts = async () => {
-  return await Post.find({});
+const getPosts = async (userId, { skip, limit }) => {
+  return await Post.find({ userId })
+    .select({ __v: 0 })
+    .skip(skip)
+    .limit(limit)
+    .sort({topic: 1});
 };
 
-const getPostsById = async (id) => {
-  const post = await Post.findById(id);
+const getPostsById = async (postId, userId) => {
+  const post = await Post.findOne({ _id: postId, userId });
 
-  if (!post) throw new NotFound(`post ${id} not found`);
+  if (!post) throw new NotFound(`post ${postId} not found`);
 
   return post;
 };
 
-const addPost = async (fields) => {
-  const post = new Post(fields);
+const addPost = async (fields, userId) => {
+  const post = new Post({ ...fields, userId });
   return await post.save();
 };
-const changePostById = async (id, fields) => {
-  await Post.findByIdAndUpdate(id, { $set: fields });
+const changePostById = async (postId, fields, userId) => {
+  await Post.findOneAndUpdate({ _id: postId, userId }, { $set: fields });
 };
-const deletePostById = async (id) => {
-  await Post.findByIdAndDelete(id);
+const deletePostById = async (postId, userId) => {
+  await Post.findOneAndDelete({ _id: postId, userId });
 };
 
 module.exports = {

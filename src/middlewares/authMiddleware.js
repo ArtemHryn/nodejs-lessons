@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { NotAuthorizedError } = require("../helper/errors");
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
+  const [, token] = req.headers.authorization.split(" ");
   if (!token) {
     next(new NotAuthorizedError("Please authentificate"));
   }
@@ -12,9 +12,8 @@ const authMiddleware = (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    next(new NotAuthorizedError("Invalid token"));
+    next(new NotAuthorizedError(error.message));
   }
-  next();
 };
 
 module.exports = { authMiddleware };
