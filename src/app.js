@@ -4,8 +4,8 @@ const cors = require("cors");
 
 const postsRouter = require("./routes/api/postsRouter");
 const authRouter = require("./routes/api/authRouter");
+const filesRouter = require("./routes/api/filesRouter");
 const {errorHandler} = require('./helper/apiHelpers')
-// const weatherRouter = require("./routes/api/weather");
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use("/api/posts", postsRouter);
 app.use("/api/auth", authRouter);
-// app.use("/api/weather", weatherRouter );
+app.use("/api/files", filesRouter);
 
 app.use(errorHandler);
 
