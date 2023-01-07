@@ -1,5 +1,4 @@
 const { describe, it, expect } = require("@jest/globals");
-const { NotFound } = require("../src/helper/errors");
 const { Post } = require("../src/models/postModel");
 const { getPostsById } = require("../src/services/postServices");
 

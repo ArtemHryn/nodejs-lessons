@@ -1,4 +1,9 @@
-const { registration, login } = require("../services/authServices");
+const {
+  registration,
+  login,
+  verification,
+  forgotPassword,
+} = require("../services/authServices");
 
 const registrationController = async (req, res) => {
   await registration(req.body);
@@ -12,4 +17,22 @@ const loginController = async (req, res) => {
   res.status(200).json({ status: "success", token });
 };
 
-module.exports = { registrationController, loginController };
+const verificationController = async (req, res) => {
+  const { code } = req.params;
+  await verification(code);
+
+  res.status(200).json({ status: "verified" });
+};
+
+const forgotPasswordController = async (req, res) => {
+  const { email } = req.body;
+  await forgotPassword(email);
+  res.status(200).json({ status: "password has been sent" });
+};
+
+module.exports = {
+  registrationController,
+  loginController,
+  verificationController,
+  forgotPasswordController,
+};
